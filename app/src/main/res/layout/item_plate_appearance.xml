@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:weightSum="10">
+
+    <RelativeLayout
+        android:layout_gravity="center"
+        android:layout_weight="6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <android.support.v7.widget.CardView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            app:cardElevation="0dp"
+            android:background="#E6E6E6"
+            android:id="@+id/view2"
+            app:cardCornerRadius="25dp"
+            android:innerRadius="0dp"
+            android:shape="ring"
+            android:thicknessRatio="1.9"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true">
+            <ImageView
+                android:id="@+id/ivPlayerPic"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_gravity="center_vertical"
+                android:layout_alignParentTop="true"
+                android:src="@drawable/visitor" />
+        </android.support.v7.widget.CardView>
+
+    </RelativeLayout>
+    <LinearLayout
+        android:padding="5dp"
+        android:layout_weight="4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/tvPlayer"
+            android:text="第 1 棒   陳水扁"
+            android:textSize="18sp"
+            android:layout_gravity="center_vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/tvPaResult"
+            android:text="擊出 左外野手 方向 高飛犧牲打"
+            android:textSize="18sp"
+            android:layout_gravity="center_vertical"
+            android:layout_width="260dp"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/tvOutPoint"
+            android:text="造成：1出局 1分打點"
+            android:textSize="18sp"
+            android:textColor="@color/colorAccent"
+            android:layout_gravity="center_vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+</LinearLayout>

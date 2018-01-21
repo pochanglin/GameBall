@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#E6E6E6"
+    android:paddingBottom="10dp"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    android:paddingTop="10dp"
+    android:weightSum="10">
+    <LinearLayout
+        android:background="@color/colorAccent"
+        android:layout_weight="3"
+        android:weightSum="10"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_weight="5"
+            android:orientation="vertical"
+            android:layout_gravity="center"
+            android:layout_width="0px"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/tvDefend"
+                android:text="防守方：隊伍A"
+                android:textSize="20sp"
+                android:textColor="#ffffff"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="20dp"
+                />
+            <TextView
+                android:id="@+id/tvPitcher"
+                android:text="投    手：鬆板大斧"
+                android:textSize="20sp"
+                android:textColor="#ffffff"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="20dp" />
+        </LinearLayout>
+        <RelativeLayout
+            android:layout_gravity="center"
+            android:layout_weight="5"
+            android:layout_width="0px"
+            android:layout_height="wrap_content">
+            <android.support.v7.widget.CardView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                app:cardElevation="10dp"
+                android:background="#E6E6E6"
+                android:id="@+id/view2"
+                app:cardCornerRadius="50dp"
+                android:innerRadius="0dp"
+                android:shape="ring"
+                android:thicknessRatio="1.9"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true">
+                <ImageView
+                    android:id="@+id/ivPitcherPic"
+                    android:layout_width="match_parent"
+                    android:layout_height="98dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_alignParentTop="true"
+                    android:src="@drawable/visitor" />
+            </android.support.v7.widget.CardView>
+        </RelativeLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:background="@color/colorAccent"
+        android:layout_weight="2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/tvCurrentBallTotal"
+            android:text="第 100 球"
+            android:textColor="#ffffff"
+            android:textSize="35sp"
+            android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20sp"/>
+        <TextView
+            android:id="@+id/tvCurrentBallNum"
+            android:text="2 好 3 壞"
+            android:textColor="#ffffff"
+            android:textSize="40sp"
+            android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="150dp"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_weight="3"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="10">
+        <TextView
+            android:text="好壞球選擇:"
+            android:textSize="20sp"
+            android:layout_weight="2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="20dp"/>
+        <RadioGroup
+            android:id="@+id/rgChoseBall"
+            android:layout_weight="8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <RadioButton
+                android:id="@+id/rbStrike"
+                android:checked="true"
+                android:hint="好球"
+                android:textSize="20sp"
+                android:layout_weight="4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <RadioButton
+                android:id="@+id/rbBall"
+                android:hint="壞球"
+                android:textSize="20sp"
+                android:layout_weight="4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </RadioGroup>
+
+    </LinearLayout>
+    <Button
+        android:id="@+id/btnSendContent"
+        android:layout_weight="0.5"
+        android:text="送出投球內容"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"/>
+    <Button
+        android:layout_weight="0.5"
+        android:text="更換守備球員"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"/>
+
+
+</LinearLayout>

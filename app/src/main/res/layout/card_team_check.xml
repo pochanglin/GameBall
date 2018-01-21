@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="5dp">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="10">
+        <TextView
+            android:id="@+id/tvPosition"
+            android:text="1"
+            android:textSize="30sp"
+            android:layout_gravity="center"
+            android:gravity=""
+            android:paddingLeft="10dp"
+            android:layout_width="30dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"/>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="30dp"
+            android:layout_height="45dp"
+            app:cardElevation="0dp"
+            android:background="#E6E6E6"
+            android:id="@+id/view2"
+            app:cardCornerRadius="23dp"
+            android:elevation="10dp"
+            android:innerRadius="0dp"
+            android:shape="ring"
+            android:thicknessRatio="1.9"
+            android:layout_weight="1"
+            android:layout_gravity="center">
+            <ImageView
+                android:id="@+id/ivPlayer"
+                android:src="@drawable/mem016"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_gravity="center"
+                android:layout_alignParentTop="true"/>
+        </android.support.v7.widget.CardView>
+        <TextView
+            android:id="@+id/tvPlayerName"
+            android:text="10 達文西"
+            android:textSize="20sp"
+            android:layout_gravity="center_vertical"
+            android:layout_width="65dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"/>
+        <Spinner
+            android:id="@+id/spFieldPosition"
+            android:entries="@array/field_position_array"
+            android:layout_gravity="center"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="4"
+            android:prompt="@string/prompt"
+            android:spinnerMode="dialog"/>
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>

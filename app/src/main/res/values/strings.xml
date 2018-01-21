@@ -1,0 +1,83 @@
+<resources>
+    <string name="app_name">GameBall</string>
+    <!--登入頁面-->
+    <string name="your_account">Your Account</string>
+    <string name="your_password">Your Password</string>
+    <string name="log_in">Log in</string>
+    <string name="cancel">Cancel</string>
+    <string name="msg_InvalidUserOrPassword">User name or password invalid</string>
+    <string name="msg_NoNetwork">No network connection available</string>
+    <!--首頁-->
+    <string name="go_log_in">前往登入 ></string>
+    <string name="go_register">前往註冊 ></string>
+    <string name="tournament">比賽專區</string>
+    <string name="membership">會員專區</string>
+    <string name="team">隊伍專區</string>
+    <string name="management">賽事管理</string>
+    <string name="title_activity_manage_game_day">ManageGameDayActivity</string>
+    <!--會員專區-->
+    <string name="text_NotGranted">not granted</string>
+
+    <string name="prompt">請選擇守備位置</string>
+    <string-array name="field_position_array">
+        <!--<item>請選擇</item>-->
+        <item>(P)投手</item>
+        <!--<item>(C)捕手</item>-->
+        <item>(1B)一壘手</item>
+        <item>(2B)二壘手</item>
+        <item>(3B)三壘手</item>
+        <item>(SS)游擊手</item>
+        <item>(LF)左外壘手</item>
+        <item>(CF)中外壘手</item>
+        <item>(RF)右外壘手</item>
+        <item>(DH)指定打席</item>
+        <item>(SF)自由手</item>
+    </string-array>
+
+    <!--alert-->
+
+    <!--數據紀錄-->
+    <!--打擊方向-->
+    <string-array name="direction">
+        <item>請選擇</item>
+        <item>無</item>
+        <item>投手</item>
+        <item>一壘手</item>
+        <item>二壘手</item>
+        <item>三壘手</item>
+        <item>游擊手</item>
+        <item>自由手</item>
+        <item>左外野</item>
+        <item>中外野</item>
+        <item>右外野</item>
+    </string-array>
+    <!--打擊結果-->
+    <string-array name="paResult">
+        <item>一壘安打</item>
+        <item>二壘安打</item>
+        <item>三壘安打</item>
+        <item>全壘打</item>
+        <item>野手選擇</item>
+        <item>保送</item>
+        <item>三振</item>
+        <item>飛球出局</item>
+        <item>滾地出局</item>
+        <item>高飛犧牲打</item>
+        <item>失誤</item>
+    </string-array>
+    <!--打點-->
+    <string-array name="point">
+        <item>0 分打點</item>
+        <item>1 分打點</item>
+        <item>2 分打點</item>
+        <item>3 分打點</item>
+        <item>4 分打點</item>
+    </string-array>
+    <!--出局數-->
+    <string-array name="out">
+        <item>造成 0 出局</item>
+        <item>造成 1 出局</item>
+        <item>造成 2 出局</item>
+        <item>造成 3 出局</item>
+    </string-array>
+</resources>
