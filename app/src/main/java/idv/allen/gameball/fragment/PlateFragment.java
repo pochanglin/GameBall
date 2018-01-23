@@ -401,7 +401,13 @@ public class PlateFragment extends Fragment {
         if (gameVO.getErrorMsgs() != null) {
             List<String> errorMsgs = gameVO.getErrorMsgs();
             Toast.makeText(getActivity(),errorMsgs.get(0),Toast.LENGTH_SHORT).show();
-            gameVO.setErrorMsgs(null);
+            for (int i = 0; i < errorMsgs.size(); i++) {
+                String errorMsg = errorMsgs.get(i);
+                errorMsgs.remove(errorMsg);
+//                gameVO.setErrorMsgs(null);
+//                gameVO.getErrorMsgs().removeAll(gameVO.getErrorMsgs());
+
+            }
             return;
         }
         //發送廣播

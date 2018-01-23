@@ -1,6 +1,7 @@
 package idv.allen.gameball.activity;
 
 import android.Manifest;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -35,6 +36,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -61,6 +63,7 @@ public class MemberActivity extends AppCompatActivity {
     private MembershipVO membershipVO;
     SharedPreferences preferences;
     private RecyclerView rvMyTeam;
+    private Uri contentUri, croppedImageUri;
 
     class UploadPicTask extends AsyncTask<MembershipVO,Void,Boolean> {
 
@@ -119,11 +122,14 @@ public class MemberActivity extends AppCompatActivity {
                     return dao.getHitterSummary(params[0]);
                 }
             }.execute(membershipVO.getMem_id()).get();
-            tvHitGameSum.setText(String.valueOf(hitter_summaryVO.getHitter_summary_games()));
-            tvHitPaSum.setText(String.valueOf(hitter_summaryVO.getHitter_summary_panum()));
-            tvHitsSum.setText(String.valueOf(hitter_summaryVO.getHitter_summary_hits()));
-            tvHitHrSum.setText(String.valueOf(hitter_summaryVO.getHitter_summary_hr()));
-            tvHitRBISum.setText(String.valueOf(hitter_summaryVO.getHitter_summary_rbi()));
+            if (hitter_summaryVO != null) {
+                tvHitGameSum.setText(String.valueOf(hitter_summaryVO.getHitter_summary_games()));
+                tvHitPaSum.setText(String.valueOf(hitter_summaryVO.getHitter_summary_panum()));
+                tvHitsSum.setText(String.valueOf(hitter_summaryVO.getHitter_summary_hits()));
+                tvHitHrSum.setText(String.valueOf(hitter_summaryVO.getHitter_summary_hr()));
+                tvHitRBISum.setText(String.valueOf(hitter_summaryVO.getHitter_summary_rbi()));
+            }
+
 
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
@@ -138,11 +144,14 @@ public class MemberActivity extends AppCompatActivity {
                     return dao.getPitcherSummary(params[0]);
                 }
             }.execute(membershipVO.getMem_id()).get();
-            tvPitchGameSum.setText(String.valueOf(pitcher_summaryVO.getPitcher_summary_games()));
-            tvPitchesSum.setText(String.valueOf(pitcher_summaryVO.getPitcher_summary_pitches()));
-            tvStrikeSum.setText(String.valueOf(pitcher_summaryVO.getPitcher_summary_strike()));
-            tvSOSum.setText(String.valueOf(pitcher_summaryVO.getPitcher_summary_so()));
-            tvWinSum.setText(String.valueOf(pitcher_summaryVO.getPitcher_summary_win()));
+            if (pitcher_summaryVO != null) {
+                tvPitchGameSum.setText(String.valueOf(pitcher_summaryVO.getPitcher_summary_games()));
+                tvPitchesSum.setText(String.valueOf(pitcher_summaryVO.getPitcher_summary_pitches()));
+                tvStrikeSum.setText(String.valueOf(pitcher_summaryVO.getPitcher_summary_strike()));
+                tvSOSum.setText(String.valueOf(pitcher_summaryVO.getPitcher_summary_so()));
+                tvWinSum.setText(String.valueOf(pitcher_summaryVO.getPitcher_summary_win()));
+            }
+
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
         }
@@ -242,7 +251,7 @@ public class MemberActivity extends AppCompatActivity {
         Intent i = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         file = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         file = new File(file, "picture.jpg");
-        Uri contentUri = FileProvider.getUriForFile(this, getPackageName() + ".provider", file);
+        contentUri = FileProvider.getUriForFile(this, getPackageName() + ".provider", file);
         i.putExtra(MediaStore.EXTRA_OUTPUT, contentUri);
         if (isIntentAvailable(this,i)) {
             startActivityForResult(i,REQ_TAKE_PICTURE);
@@ -260,38 +269,38 @@ public class MemberActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        Log.d(TAG,String.valueOf(requestCode));
         if (resultCode == RESULT_OK) {
             switch (requestCode) {
                 case REQ_TAKE_PICTURE:
-                    BitmapFactory.Options opt = new BitmapFactory.Options();
-                    opt.inSampleSize = Util.getImageScale(file.getPath(),100,100);
-                    Bitmap pic = BitmapFactory.decodeFile(file.getPath(), opt);
-                    //上傳
-                    if (pic == null) return;
-                    byte[] image = Util.bitmapToPNG(pic);
-                    membershipVO.setMem_pic(image);
-                    String imageBase64 = Base64.encodeToString(image, Base64.DEFAULT);
-                    if (networkConnected()) {
-                        try {
-                            boolean result = new UploadPicTask().execute(membershipVO).get();
-                            //the result from server
-                            if (result) {
-                                Toast.makeText(this,"上傳成功 ^____^",Toast.LENGTH_SHORT).show();
-                                preferences.edit().remove("meberData").apply();
-                                Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
-                                preferences.edit().putString("meberData",gson.toJson(membershipVO)).apply();
-                                ivMemPic.setImageBitmap(pic);
-                            } else {
-                                Toast.makeText(this,"上傳失敗 Q____Q",Toast.LENGTH_SHORT).show();
-                            }
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        } catch (ExecutionException e) {
-                            e.printStackTrace();
-                        }
-                    } else {
-
-                    }
+                    crop(contentUri);
+//                    BitmapFactory.Options opt = new BitmapFactory.Options();
+//                    opt.inSampleSize = Util.getImageScale(file.getPath(),100,100);
+//                    Bitmap pic = BitmapFactory.decodeFile(file.getPath(), opt);
+//                    //上傳
+//                    if (pic == null) return;
+//                    byte[] image = Util.bitmapToPNG(pic);
+//                    membershipVO.setMem_pic(image);
+//                    String imageBase64 = Base64.encodeToString(image, Base64.DEFAULT);
+//                    if (networkConnected()) {
+//                        try {
+//                            boolean result = new UploadPicTask().execute(membershipVO).get();
+//                            //the result from server
+//                            if (result) {
+//                                Toast.makeText(this,"上傳成功 ^____^",Toast.LENGTH_SHORT).show();
+//                                preferences.edit().remove("meberData").apply();
+//                                Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+//                                preferences.edit().putString("meberData",gson.toJson(membershipVO)).apply();
+//                                ivMemPic.setImageBitmap(pic);
+//                            } else {
+//                                Toast.makeText(this,"上傳失敗 Q____Q",Toast.LENGTH_SHORT).show();
+//                            }
+//                        } catch (InterruptedException | ExecutionException e) {
+//                            e.printStackTrace();
+//                        }
+//                    } else {
+//
+//                    }
                     break;
                 case REQUEST_LOGIN:
                     SharedPreferences preferences = getSharedPreferences(Util.PREF_FILE, MODE_PRIVATE);
@@ -301,9 +310,106 @@ public class MemberActivity extends AppCompatActivity {
                     } else {
                         onLogin();
                     }
+                    break;
+                case REQ_CROP_PICTURE:
+                    Log.d(TAG, "REQ_CROP_PICTURE: " + croppedImageUri.toString());
+                    int newSize = 400;
+                    Bitmap bitmap = null;
+                    try {
+                        bitmap = BitmapFactory.decodeStream(
+                                getContentResolver().openInputStream(croppedImageUri));
+                        Bitmap downsizedImage = Util.downSize(bitmap, newSize);
+                        upLoadImg(downsizedImage);
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    }
+                    break;
+            }
+        } else {
+            Log.d(TAG,"QQ");
+        }
+        if (requestCode == REQ_CROP_PICTURE ) {
+            Log.d(TAG,"55555555555555555");
+            int newSize = 150;
+            Bitmap bitmap = null;
+            try {
+                bitmap = BitmapFactory.decodeStream(
+                        getContentResolver().openInputStream(croppedImageUri));
+                Bitmap downsizedImage = Util.downSize(bitmap, newSize);
+                upLoadImg(downsizedImage);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private void upLoadImg(Bitmap pic) {
+        Log.d(TAG,"ggggggggggggggggggg");
+        //上傳
+        if (pic == null) {
+            Log.d(TAG,"0000000000000");
+            return;
+        }
+        byte[] image = Util.bitmapToPNG(pic);
+        membershipVO.setMem_pic(image);
+        String imageBase64 = Base64.encodeToString(image, Base64.DEFAULT);
+//        String imgStr = new String(imageBase64,"UTF-8");
+//        membershipVO.setMem_pic_Base64(imageBase64);
+//        membershipVO.setMem_pic(null);
+        if (networkConnected()) {
+            try {
+                boolean result = new UploadPicTask().execute(membershipVO).get();
+                //the result from server
+                if (result) {
+                    Toast.makeText(this,"上傳成功 ^____^",Toast.LENGTH_SHORT).show();
+                    preferences.edit().remove("meberData").apply();
+                    Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+                    preferences.edit().putString("meberData",gson.toJson(membershipVO)).apply();
+                    ivMemPic.setImageBitmap(pic);
+                } else {
+                    Toast.makeText(this,"上傳失敗 Q____Q",Toast.LENGTH_SHORT).show();
+                }
+            } catch (InterruptedException | ExecutionException e) {
+                e.printStackTrace();
             }
         } else {
 
+        }
+    }
+
+    private static final int REQ_CROP_PICTURE = 2;
+    private void crop(Uri sourceImageUri) {
+        File file = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        file = new File(file, "picture_cropped.jpg");
+        croppedImageUri = Uri.fromFile(file);
+        Log.d(TAG,croppedImageUri.toString());
+        // take care of exceptions
+        try {
+            // call the standard crop action intent (the user device may not support it)
+            Intent cropIntent = new Intent("com.android.camera.action.CROP");
+            // the recipient of this Intent can read soruceImageUri's data
+            cropIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            // set image source Uri and type
+            cropIntent.setDataAndType(sourceImageUri, "image/*");
+            // send crop message
+            cropIntent.putExtra("crop", "true");
+            // aspect ratio of the cropped area, 0 means user define
+            cropIntent.putExtra("aspectX", 0); // this sets the max width
+            cropIntent.putExtra("aspectY", 0); // this sets the max height
+            // output with and height, 0 keeps original size
+            cropIntent.putExtra("outputX", 0);
+            cropIntent.putExtra("outputY", 0);
+            // whether keep original aspect ratio
+            cropIntent.putExtra("scale", true);
+            cropIntent.putExtra(MediaStore.EXTRA_OUTPUT, croppedImageUri);
+            // whether return data by the intent
+            cropIntent.putExtra("return-data", true);
+            // start the activity - we handle returning in onActivityResult
+            startActivityForResult(cropIntent, REQ_CROP_PICTURE);
+        }
+        // respond to users whose devices do not support the crop action
+        catch (ActivityNotFoundException anfe) {
+            Toast.makeText(this, "This device doesn't support the crop action!", Toast.LENGTH_SHORT).show();
         }
     }
 

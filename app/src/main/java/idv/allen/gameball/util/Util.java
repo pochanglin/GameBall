@@ -80,4 +80,28 @@ public class Util {
         Log.d(TAG, "userName = " + userName);
         return userName;
     }
+
+    public static Bitmap downSize(Bitmap srcBitmap, int newSize) {
+        if (newSize <= 50) {
+            // 如果欲縮小的尺寸過小，就直接定為128
+            newSize = 128;
+        }
+        int srcWidth = srcBitmap.getWidth();
+        int srcHeight = srcBitmap.getHeight();
+        String text = "source image size = " + srcWidth + "x" + srcHeight;
+        Log.d(TAG, text);
+        int longer = Math.max(srcWidth, srcHeight);
+
+        if (longer > newSize) {
+            double scale = longer / (double) newSize;
+            int dstWidth = (int) (srcWidth / scale);
+            int dstHeight = (int) (srcHeight / scale);
+            srcBitmap = Bitmap.createScaledBitmap(srcBitmap, dstWidth, dstHeight, false);
+            System.gc();
+            text = "\nscale = " + scale + "\nscaled image size = " +
+                    srcBitmap.getWidth() + "x" + srcBitmap.getHeight();
+            Log.d(TAG, text);
+        }
+        return srcBitmap;
+    }
 }

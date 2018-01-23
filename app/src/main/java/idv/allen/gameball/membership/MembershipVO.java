@@ -18,6 +18,8 @@ public class MembershipVO {
     private Date mem_apdate;
     private String mem_intro;
     private String mem_status;
+    //for android
+    private String mem_pic_Base64;
 
     public String getMem_id() {
         return mem_id;
@@ -108,5 +110,13 @@ public class MembershipVO {
     }
     public void setMem_status(String mem_status) {
         this.mem_status = mem_status;
+    }
+
+    public String getMem_pic_Base64() {
+        return mem_pic_Base64;
+    }
+
+    public void setMem_pic_Base64(String mem_pic_Base64) {
+        this.mem_pic_Base64 = mem_pic_Base64;
     }
 }
