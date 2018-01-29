@@ -213,25 +213,30 @@ public class PlateFragment extends Fragment {
         }
         //取出打者物件
         PlayerVO playerVO = game.getPlayerList().get(game.getFirstTeam()).get(game.getFirstSeq());
-        tvBattingOrder.setText("第 "+playerVO.getBattingOrder()+" 棒");
-        tvJerseyNumber.setText("背號 "+playerVO.getJerseyNumber()+" 號");
-        tvPlayerName.setText("球員："+playerVO.getPlayerName());
-        tvFieldPosition.setText("守備位置："+playerVO.getFieldPosition());
-        //抓打者照片
-        MembershipVO membershipVO;
-        try {
-            membershipVO = new AsyncTask<String,Void,MembershipVO>() {
-                @Override
-                protected MembershipVO doInBackground(String... params) {
-                    MembershipDAO_interface dao = new MembershipDAO();
-                    return dao.findByPrimaryKey(params[0]);
-                }
-            }.execute(playerVO.getPlayerId()).get();
-            Bitmap bitmap = BitmapFactory.decodeByteArray(membershipVO.getMem_pic(),0,membershipVO.getMem_pic().length);
-            ivPlayerPic.setImageBitmap(bitmap);
-        } catch (InterruptedException | ExecutionException e) {
-            e.printStackTrace();
+        if (playerVO != null) {
+            tvBattingOrder.setText("第 "+playerVO.getBattingOrder()+" 棒");
+            tvJerseyNumber.setText("背號 "+playerVO.getJerseyNumber()+" 號");
+            tvPlayerName.setText("球員："+playerVO.getPlayerName());
+            tvFieldPosition.setText("守備位置："+playerVO.getFieldPosition());
+
+            //抓打者照片
+            MembershipVO membershipVO;
+            try {
+                membershipVO = new AsyncTask<String,Void,MembershipVO>() {
+                    @Override
+                    protected MembershipVO doInBackground(String... params) {
+                        MembershipDAO_interface dao = new MembershipDAO();
+                        return dao.findByPrimaryKey(params[0]);
+                    }
+                }.execute(playerVO.getPlayerId()).get();
+                Bitmap bitmap = BitmapFactory.decodeByteArray(membershipVO.getMem_pic(),0,membershipVO.getMem_pic().length);
+                ivPlayerPic.setImageBitmap(bitmap);
+            } catch (InterruptedException | ExecutionException e) {
+                e.printStackTrace();
+            }
         }
+
+
         return view;
     }
     public void findViews(View view) {
@@ -355,7 +360,10 @@ public class PlateFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 overGame();
+                Intent intent = new Intent(Util.BROADCAST_GAMEDAY);
+                localBroadcastManager.sendBroadcast(intent);
                 getActivity().finish();
+
             }
         });
     }

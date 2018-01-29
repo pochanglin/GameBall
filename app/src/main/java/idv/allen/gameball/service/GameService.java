@@ -164,6 +164,7 @@ public class GameService extends Service {
                     "code = %d, reason = %s, remote = %b",
                     code, reason, remote);
             Log.d(TAG, "onClose: " + text);
+
         }
 
         @Override

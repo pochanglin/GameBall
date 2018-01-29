@@ -34,7 +34,7 @@
                 android:layout_marginLeft="23dp"
                 android:layout_marginStart="23dp"
                 android:layout_toRightOf="@+id/imageView"
-                android:text="今天 3 場比賽"
+                android:text="目前的比賽"
                 android:textColor="#ffffff"
                 android:textSize="20dp"
                 android:id="@+id/textView2" />

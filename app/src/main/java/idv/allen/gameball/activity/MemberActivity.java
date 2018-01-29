@@ -344,10 +344,9 @@ public class MemberActivity extends AppCompatActivity {
     }
 
     private void upLoadImg(Bitmap pic) {
-        Log.d(TAG,"ggggggggggggggggggg");
         //上傳
         if (pic == null) {
-            Log.d(TAG,"0000000000000");
+            Log.d(TAG,"pic == null");
             return;
         }
         byte[] image = Util.bitmapToPNG(pic);

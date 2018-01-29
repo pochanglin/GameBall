@@ -31,7 +31,7 @@ public class TestActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         ChatWebSocketClient webSocketClient = new ChatWebSocketClient(uri);
-        webSocketClient.connect();
+//        webSocketClient.connect();
     }
 
     public class ChatWebSocketClient extends WebSocketClient {

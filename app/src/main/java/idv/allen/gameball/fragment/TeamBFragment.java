@@ -1,7 +1,6 @@
 package idv.allen.gameball.fragment;
 
 
-import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -17,12 +16,9 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Base64;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -148,7 +144,7 @@ public class TeamBFragment extends Fragment {
 
         GamedayVO gamedayVO = new GamedayVO();
         gamedayVO.setGameday_id(gameday_id);
-        gamedayVO.setTeam_b_check("準時");
+        gamedayVO.setTeam_b_check("比賽準時");
         SendCheckTeamTask task = new SendCheckTeamTask();
 
         try {

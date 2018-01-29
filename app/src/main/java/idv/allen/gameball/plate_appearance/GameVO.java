@@ -11,42 +11,42 @@ import java.util.List;
 
 public class GameVO implements Serializable  {
     //單場的數據
+    String tourn_id;//賽事ID
+    public String getTourn_id() {
+        return tourn_id;
+    }
+    public void setTourn_id(String tourn_id) {
+        this.tourn_id = tourn_id;
+    }
     //不確定要不要放///
-    private Integer totalRun;//得分R
-    private Integer totalHit;//安打
-    private Integer totalError;//失誤E
+    Integer endFirst;//比賽結束時，先攻得分
+    Integer endSecond;//比賽結束時，後攻得分
     //////////////
-    private String firstTeam;//先攻隊
-    private String secondTeam;//後攻隊
-    private String firstPitcher;//先攻先發
-    private String secondPitcher;//後攻先發
-    private String gamedayId;//場次
-    private String gameStatus;//比賽狀態 0未開始1進行中2已結束
-    private Integer inning;//局數
-    private ArrayList<Integer> firstPoint;//先攻分數
-    private ArrayList<Integer> secondPoint;//後攻分數
-    private Integer firstSeq;//先攻棒次(會記錄上一局打到第幾棒)
-    private Integer secondSeq;//後攻棒次
+    String firstTeam;//先攻隊
+    String secondTeam;//後攻隊
+    String firstPitcher;//先攻先發
+    String secondPitcher;//後攻先發
+    String gamedayId;//場次
+    String gameStatus;//比賽狀態 0未開始1進行中2已結束
+    Integer inning;//局數
+    ArrayList<Integer> firstPoint;//先攻分數
+    ArrayList<Integer> secondPoint;//後攻分數
+    Integer firstSeq;//先攻棒次(會記錄上一局打到第幾棒)
+    Integer secondSeq;//後攻棒次
     //單局的數據(每局reset一次)
-    private Integer out;//出局數
-    private Integer currentRun;//這局得分
+    Integer out;//出局數
+    Integer currentRun;//這局得分
     //單人次的數據(每人次reset一次)
-    private Integer currentNumBall;//這人次投球數(最多4)
-    private Integer currentStrike;//這人次好球數
-    private Integer currentBall;//這人次壞球數
+    Integer currentNumBall;//這人次投球數(最多4)
+    Integer currentStrike;//這人次好球數
+    Integer currentBall;//這人次壞球數
     //打者序列 HashMap<隊伍,HashMap<棒次,打者物件>>
-    private HashMap<String,HashMap<Integer,PlayerVO>> playerList;
+    HashMap<String,HashMap<Integer,PlayerVO>> playerList;
     //投手打序資訊HashMap<隊伍,HashMap<名字,投手物件>
-    private HashMap<String,HashMap<String,PitcherVO>> pitcherList;
-    //for android
+    HashMap<String,HashMap<String,PitcherVO>> pitcherList;
+    //儲存錯誤訊息for android
     List<String> errorMsgs;
-    //for android
-    public List<String> getErrorMsgs() {
-        return errorMsgs;
-    }
-    public void setErrorMsgs(List<String> errorMsgs) {
-        this.errorMsgs = errorMsgs;
-    }
+
     public Integer getCurrentRun() {
         return currentRun;
     }
@@ -77,23 +77,18 @@ public class GameVO implements Serializable  {
     public void setSecondTeam(String secondTean) {
         this.secondTeam = secondTean;
     }
-    public Integer getTotalRun() {
-        return totalRun;
+
+    public Integer getEndFirst() {
+        return endFirst;
     }
-    public void setTotalRun(Integer totalRun) {
-        this.totalRun = totalRun;
+    public void setEndFirst(Integer endFirst) {
+        this.endFirst = endFirst;
     }
-    public Integer getTotalHit() {
-        return totalHit;
+    public Integer getEndSecond() {
+        return endSecond;
     }
-    public void setTotalHit(Integer totalHit) {
-        this.totalHit = totalHit;
-    }
-    public Integer getTotalError() {
-        return totalError;
-    }
-    public void setTotalError(Integer totalError) {
-        this.totalError = totalError;
+    public void setEndSecond(Integer endSecond) {
+        this.endSecond = endSecond;
     }
     public String getGamedayId() {
         return gamedayId;
@@ -173,5 +168,10 @@ public class GameVO implements Serializable  {
     public void setPitcherList(HashMap<String, HashMap<String, PitcherVO>> pitcherList) {
         this.pitcherList = pitcherList;
     }
-
+    public List<String> getErrorMsgs() {
+        return errorMsgs;
+    }
+    public void setErrorMsgs(List<String> errorMsgs) {
+        this.errorMsgs = errorMsgs;
+    }
 }

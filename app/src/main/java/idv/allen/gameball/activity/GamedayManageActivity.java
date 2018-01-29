@@ -1,17 +1,21 @@
 package idv.allen.gameball.activity;
 
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.BitmapFactory;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Base64;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +33,7 @@ import idv.allen.gameball.gameday.GamedayVO;
 import idv.allen.gameball.team.TeamDAO;
 import idv.allen.gameball.team.TeamDAO_interface;
 import idv.allen.gameball.team.TeamVO;
+import idv.allen.gameball.util.Util;
 
 public class GamedayManageActivity extends AppCompatActivity {
     private final static String TAG = "GamedayManageActivity";
@@ -37,6 +42,8 @@ public class GamedayManageActivity extends AppCompatActivity {
     GamedayAdapter adapter;
     private String tourn_id;
     Bundle bundle;
+    private ChangeDataReceiver changeDataReceiver;
+    private LocalBroadcastManager localBroadcastManager;
 
     class RetrieveGamedayTask extends AsyncTask<String,Void,List<GamedayVO>> {
         private ProgressDialog progressDialog;
@@ -80,6 +87,9 @@ public class GamedayManageActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //註冊廣播接收器
+        localBroadcastManager = LocalBroadcastManager.getInstance(this);
+        registerChangeDataReceiver();
         setContentView(R.layout.activity_gameday_manage);
         rvGameDay = (RecyclerView) findViewById(R.id.rvGameDay);
         Bundle bundle = getIntent().getExtras();
@@ -107,12 +117,25 @@ public class GamedayManageActivity extends AppCompatActivity {
 //        rvGameDay.setAdapter(adapter);
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        localBroadcastManager.unregisterReceiver(changeDataReceiver);
+    }
+
     public void showTournRecyclerView (List<GamedayVO> gamedayVOs) {
         rvGameDay.setHasFixedSize(true);
         rvGameDay.setLayoutManager(
                 new StaggeredGridLayoutManager(1,StaggeredGridLayoutManager.VERTICAL));
         adapter = new GamedayAdapter(gamedayVOs);
         rvGameDay.setAdapter(adapter);
+    }
+
+    private void registerChangeDataReceiver() {
+        IntentFilter filter = new IntentFilter(Util.BROADCAST_GAMEDAY);
+        changeDataReceiver = new ChangeDataReceiver();
+        localBroadcastManager.registerReceiver(changeDataReceiver, filter);
+        Log.d(TAG,"Broadcast registered");
     }
 
     private class GamedayAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -259,10 +282,13 @@ public class GamedayManageActivity extends AppCompatActivity {
                         //賽事名稱
                         viewHolder.tvGamedayName.setText(gamedayVO.getGameday_name());
                         //賽事日期
-                        String gamedayDate = gamedayVO.getGameday_time().toString();
-                        viewHolder.tvGamedayDate.setText(gamedayDate.substring(0,10));
-                        //賽事時間
-                        viewHolder.tvGamedayTime.setText(gamedayDate.substring(10,16));
+                        if (gamedayVO.getGameday_time() != null) {
+                            String gamedayDate = gamedayVO.getGameday_time().toString();
+                            viewHolder.tvGamedayDate.setText(gamedayDate.substring(0,10));
+                            //賽事時間
+                            viewHolder.tvGamedayTime.setText(gamedayDate.substring(10,16));
+                        }
+
                         //伸縮子layout
                         viewHolder.itemView.setOnClickListener(new MyListener(position));
                         viewHolder.manageBtnLayout.setVisibility(gamedayButtonExpanded[position] ? View.VISIBLE : View.GONE);
@@ -322,6 +348,19 @@ public class GamedayManageActivity extends AppCompatActivity {
         @Override
         public int getItemCount() {
             return gamedayList.size();
+        }
+    }
+
+    private class ChangeDataReceiver extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Log.d(TAG,"QQQQQQQQQQQQQQQQQQQQQQQQ");
+            if (networkConnected()) {
+                AsyncTask retrieveGamedayTask = new RetrieveGamedayTask().execute(tourn_id);
+            } else {
+                //沒連上網路
+            }
         }
     }
 

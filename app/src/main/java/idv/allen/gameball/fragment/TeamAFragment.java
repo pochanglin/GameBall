@@ -139,7 +139,7 @@ public class TeamAFragment extends Fragment {
 
         GamedayVO gamedayVO = new GamedayVO();
         gamedayVO.setGameday_id(gameday_id);
-        gamedayVO.setTeam_a_check("準時");
+        gamedayVO.setTeam_a_check("比賽準時");
         SendCheckTeamATask task = new SendCheckTeamATask();
 
         try {

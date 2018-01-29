@@ -16,18 +16,19 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class Util {
     private final static String TAG = "Util";
-    public final static String URL_MEM = "http://10.120.39.16:8081/GAMEBALL_Android/android/MembershipServlet";
-    public final static String URL_TOURN = "http://10.120.39.16:8081/GAMEBALL_Android/android/TournamentServlet";
-    public final static String URL_GAMEDAY = "http://10.120.39.16:8081/GAMEBALL_Android/android/GamedayServlet";
-    public final static String URL_TEAM = "http://10.120.39.16:8081/GAMEBALL_Android/android/TeamServlet";
-    public final static String URL_ROSTER = "http://10.120.39.16:8081/GAMEBALL_Android/android/RosterServlet";
-    public final static String URL_PLATE_APPEARANCE = "http://10.120.39.16:8081/GAMEBALL/android/Plate_appearanceServlet";
-    public final static String PREF_FILE = "preference";
+    public final static String URL_MEM = "http://10.120.39.22:8081/GAMEBALL_Android/android/MembershipServlet";
+    public final static String URL_TOURN = "http://10.120.39.22:8081/GAMEBALL_Android/android/TournamentServlet";
+    public final static String URL_GAMEDAY = "http://10.120.39.22:8081/GAMEBALL_Android/android/GamedayServlet";
+    public final static String URL_TEAM = "http://10.120.39.22:8081/GAMEBALL_Android/android/TeamServlet";
+    public final static String URL_ROSTER = "http://10.120.39.22:8081/GAMEBALL_Android/android/RosterServlet";
+    public final static String URL_PLATE_APPEARANCE = "http://10.120.39.22:8081/GAMEBALL/android/Plate_appearanceServlet";
+    public final static String SERVER_URI = "ws://10.120.39.22:8081/GAMEBALL/TogetherWS/";
+    public final static String NOTISTARTGAMEWS_URI = "ws://10.120.39.22:8081/GAMEBALL_Android/NotiStartGameWS/";
     public static final String BROADCAST_PLATE = "idv.allen.gameball.platefragment";
+    public static final String BROADCAST_GAMEDAY = "idv.allen.gameball.GamedayManageActivity";
     public static final String WS_PLATE = "idv.allen.gameball.GamedayLiveWS";
     public static final String WS_GAME_START = "idv.allen.gameball.GamedayLiveWS.StartGame";
-    public final static String SERVER_URI = "ws://10.120.39.16:8081/GAMEBALL/TogetherWS/";
-    public final static String NOTISTARTGAMEWS_URI = "ws://10.120.39.16:8081/GAMEBALL_Android/NotiStartGameWS/";
+    public final static String PREF_FILE = "preference";
     public static GamedayLiveWS gamedayLiveWS;
 
 

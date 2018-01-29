@@ -25,11 +25,12 @@
             android:value="@integer/google_play_services_version" />
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyDTfpShY_lRUjGWPyq7DCReXvj5qAyUYmc" />
+            android:value="AIzaSyDE4RCC7blyEv9cAxC-Uv5D-de1SL9Dt4U" />
 
         <activity
             android:name=".activity.SplashActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -50,8 +51,12 @@
         <activity
             android:name=".activity.Login2Activity"
             android:screenOrientation="portrait" />
-        <activity android:name=".activity.ManageActivity" />
-        <activity android:name=".activity.GamedayManageActivity" />
+        <activity
+            android:name=".activity.ManageActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activity.GamedayManageActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".activity.CheckTeamActivity"
             android:screenOrientation="portrait"
@@ -85,7 +90,9 @@
             android:name=".activity.GamedayLiveActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait"/>
-        <activity android:name=".activity.TeamsActivity" />
+        <activity
+            android:name=".activity.TeamsActivity"
+            android:screenOrientation="portrait"/>
 
         <service
             android:name=".service.GameService"
